@@ -1,4 +1,4 @@
-import pygame, time, sys, os
+import pygame, time, sys, os, vlc
 from threading import Thread
 from mutagen.mp3 import MP3
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit, QPushButton)
@@ -11,14 +11,28 @@ app = QApplication(sys.argv)
 root = QWidget()
 
 
-class MainScreen():
+class MusicList():
 
     def __init__(self):
 
-        self.a = 3
+        self.all_music_dir = '/home/geneus/Music/Allmusic'
+        self.all_music = os.listdir(self.all_music_dir)
+
+        self.x_music_list = 10
+        self.y_music_list = 10
+
+        self.all_music_list_list = []
+
+        for i in range(len(self.all_music)):
+            self.all_music[i] = self.all_music[i][:int(len(self.all_music[i]) - 4)]
+            self.all_music_list_list.append(QLabel(self.all_music[i], root))
+            self.all_music_list_list[i].move(self.x_music_list, self.y_music_list)
+            self.all_music_list_list[i].show()
+
+            self.y_music_list += 20
 
 
-main_screen_var = MainScreen()
+music_list_var = MusicList()
 global a
 a = True
 
@@ -40,19 +54,12 @@ def playMusic():
         break
 
 
-def main_window(main_screen_var):
-    global my_input
+def main_window(music_list_var):
+    global my_input, st_sto
 
     root.resize(1280, 720)
     root.move(400, 200)
     root.show()
-
-    all_music_dir = '/home/geneus/Music/Allmusic'
-
-    all_music = os.listdir(all_music_dir)
-
-    for i in range(len(all_music)):
-        print(all_music[i])
 
     my_input = input()
 
@@ -60,7 +67,7 @@ def main_window(main_screen_var):
     now_music.start()
 
 
-main_window(main_screen_var)
+main_window(music_list_var)
 
 a = False
 
