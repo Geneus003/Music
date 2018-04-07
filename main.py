@@ -11,15 +11,42 @@ app = QApplication(sys.argv)
 root = QWidget()
 
 
+def start_concert_music(my_input):
+    def play_music(event):
+        while a == True:
+            print("click")
+            print(my_input)
+            music_road = "Allmusic/"
+            music_road += my_input
+            music_road += ".mp3"
+            pygame.mixer.music.load(music_road)
+            b = MP3(music_road)
+            pygame.mixer.music.play()
+            time.sleep(1)
+            pygame.mixer.music.pause()
+            time.sleep(3)
+            pygame.mixer.music.unpause()
+            time.sleep(int(b))
+            pygame.mixer.music.stop()
+            break
+
+    return play_music
+
+
+
 class MusicList():
 
     def __init__(self):
+
+        # get list of music from directory
 
         self.all_music_dir = '/home/geneus/Music/Allmusic'
         self.all_music = os.listdir(self.all_music_dir)
 
         self.x_music_list = 10
         self.y_music_list = 10
+
+        # Show music list on screen
 
         self.all_music_list_list = []
 
@@ -31,27 +58,20 @@ class MusicList():
 
             self.y_music_list += 20
 
+        self.__index__()
+
+    def __index__(self):
+
+        for i in range(len(self.all_music)):
+            self.all_music_list_list[i].mousePressEvent = start_concert_music(self.all_music[i])
+
 
 music_list_var = MusicList()
 global a
 a = True
 
-
-def playMusic():
-    while a == True:
-        music_road = "Allmusic/"
-        music_road += my_input
-        music_road += ".mp3"
-        pygame.mixer.music.load(music_road)
-        b = MP3(music_road)
-        pygame.mixer.music.play()
-        time.sleep(10)
-        pygame.mixer.music.pause()
-        time.sleep(3)
-        pygame.mixer.music.unpause()
-        time.sleep(int(b))
-        pygame.mixer.music.stop()
-        break
+# Function which play music
+# my_input - name of music(for text edition)
 
 
 def main_window(music_list_var):
@@ -61,10 +81,10 @@ def main_window(music_list_var):
     root.move(400, 200)
     root.show()
 
-    my_input = input()
+    # my_input = input()
 
-    now_music = Thread(target=playMusic)
-    now_music.start()
+    # now_music = Thread(target=play_music)
+    # now_music.start()
 
 
 main_window(music_list_var)
