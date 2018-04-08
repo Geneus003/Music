@@ -12,26 +12,30 @@ root = QWidget()
 
 
 def start_concert_music(my_input):
+
     def play_music(event):
-        while a == True:
-            print("click")
-            print(my_input)
-            music_road = "Allmusic/"
-            music_road += my_input
-            music_road += ".mp3"
-            pygame.mixer.music.load(music_road)
-            b = MP3(music_road)
-            pygame.mixer.music.play()
-            time.sleep(1)
-            pygame.mixer.music.pause()
-            time.sleep(3)
-            pygame.mixer.music.unpause()
-            time.sleep(int(b))
-            pygame.mixer.music.stop()
-            break
+
+        def play_with_thread():
+            a = True
+            while a == True:
+                music_road = "Allmusic/"
+                music_road += my_input
+                music_road += ".mp3"
+                pygame.mixer.music.load(music_road)
+                b = MP3(music_road)
+                pygame.mixer.music.play()
+                time.sleep(int(b.info.length))
+                pygame.mixer.music.stop()
+                break
+
+        music_thread = Thread(target=play_with_thread)
+        music_thread.start()
 
     return play_music
 
+
+def check_func(event):
+    print("dsdsd")
 
 
 class MusicList():
