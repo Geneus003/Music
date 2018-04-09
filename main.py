@@ -14,6 +14,7 @@ root = QWidget()
 def start_concert_music(my_input):
 
     def play_music(event):
+        global music_thread
 
         def play_with_thread():
             a = True
@@ -93,6 +94,6 @@ def main_window(music_list_var):
 
 main_window(music_list_var)
 
-a = False
-
 sys.exit(app.exec_())
+
+music_thread.stop()
